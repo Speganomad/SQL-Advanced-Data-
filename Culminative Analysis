@@ -1,0 +1,48 @@
+--Calculate the total sales per month 
+--and running total of sales over time
+SELECT 
+order_date,
+total_sales,
+--Window Function
+SUM(total_sales) OVER(
+PARTITION BY YEAR(order_date) ORDER BY order_date) as running_total
+FROM
+(
+SELECT
+DATETRUNC(month, order_date) as order_date,
+SUM(sales_amount) as total_sales
+FROM gold.fact_sales
+GROUP BY DATETRUNC(month, order_date)
+) t
+
+--Year by year table
+SELECT 
+order_date,
+total_sales,
+--Window Function
+SUM(total_sales) OVER(ORDER BY order_date) as running_total
+FROM
+(
+SELECT
+DATETRUNC(year, order_date) as order_date,
+SUM(sales_amount) as total_sales
+FROM gold.fact_sales
+GROUP BY DATETRUNC(year, order_date)
+) t
+
+--Year by Year with rolling average price
+SELECT 
+order_date,
+total_sales,
+--Window Function
+SUM(total_sales) OVER(ORDER BY order_date) as running_total,
+AVG(avg_price) OVER(ORDER BY order_date) as rolling_average
+FROM
+(
+SELECT
+DATETRUNC(year, order_date) as order_date,
+SUM(sales_amount) as total_sales,
+AVG(price) as avg_price
+FROM gold.fact_sales
+GROUP BY DATETRUNC(year, order_date)
+) t
