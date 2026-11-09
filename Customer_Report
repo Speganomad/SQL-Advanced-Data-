@@ -1,7 +1,13 @@
 /*
-Create a customer report to gather essential fields, 
-segment customers into categories and aggregate customer as well as
-calculate KPIs
+=================================
+Customer Report
+=================================
+Purpose: Consolidate key customer metrics and behaviors
+1. Gather essential fields such as names, ages and transaction details
+2. Segment customers by purchases into VIPs, Regulars and New Customers as well as age groups
+3. Aggregate customer level metrics such as total orders, total sales, total quantity purchased, total products and lifespan
+4. Calculate KPIs like recency, average order value and average monthly spend
+=================================================================================================================================
 */
 
 CREATE VIEW gold.report_customers AS 
